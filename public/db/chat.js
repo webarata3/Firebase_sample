@@ -34,7 +34,7 @@ messagesRef.on('child_added', (data) => {
     const deleteEl = deleteButton.parentNode;
     deleteEl.parentNode.removeChild(deleteEl);
 
-    messagesRef.child(snapshot.key).remove();
+    messagesRef.child(data.key).remove();
   });
   messageArea.appendChild(deleteButton);
 

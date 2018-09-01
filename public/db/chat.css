@@ -64,7 +64,7 @@ body {
 
 .floating-box {
   position: relative;
-  margin-top: calc(var(--floating-font-size) - 14px);
+  margin-top: calc(var(--floating-font-size) - 9px);
   margin-bottom: 20px;
   border: 1px solid #666;
   display: inline-block;
