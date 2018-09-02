@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+ <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>書籍管理</title>
+  <link href="/db/book.css" rel="stylesheet">
+ </head>
+ <body>
+  <div class="inputArea">
+   <input type="text" size="20" id="isbn" placeholder="ISBN">
+   <input type="text" size="40" id="name" placeholder="書名">
+   <button id="insertButton">登録</button>
+  </div>
+  <div id="bookList"></div>
+  <script src="/__/firebase/5.4.2/firebase-app.js"></script>
+  <script src="/__/firebase/5.4.2/firebase-database.js"></script>
+  <script src="/__/firebase/init.js"></script>
+  <script src="/db/book.js"></script>
+ </body>
+</html>

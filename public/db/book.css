@@ -1,0 +1,56 @@
+@charset "utf-8";
+
+:root {
+  /* 最小14px */
+  --floating-font-size: 14px;
+  --blue: #007bff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.inputArea {
+  margin: 5px;
+}
+
+button {
+  background-color: #fff;
+  border: 1px solid var(--blue);
+  border-radius: 5px;
+  color: var(--blue);
+  padding: 4px 8px;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  outline: none;
+}
+
+button:hover {
+  background-color: var(--blue);
+  color: #fff;
+}
+
+.isbn {
+  color: #999;
+  font-size: 7px;
+}
+
+.name {
+  text-indent: 3em;
+}
+
+#bookList {
+  margin: 10px;
+}
+
+#bookList > div {
+  padding: 5px;
+}
+
+#bookList > div:not(:last-child) {
+  border-bottom: 1px solid #999;
+}
