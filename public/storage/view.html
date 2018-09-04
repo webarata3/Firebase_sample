@@ -3,8 +3,8 @@
  <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ストレージ</title>
-  <link href="/storage/storage.css" rel="stylesheet">
+  <title>ストレージの画像表示</title>
+  <link href="/storage/view.css" rel="stylesheet">
  </head>
  <body>
   <div id="loaderArea">
@@ -25,18 +25,14 @@
     <button id="logout" class="auth_button" hidden>ログアウト</button>
    </div>
   </div>
-  <div id="storageArea">
-   <input type="file" id="file" hidden><button id="selectFile">ファイルを選択</button>
-   <div id="uploadStatus" class="hidden">
-    <div id="fileName"></div>
-    <div id="fileSize"></div>
-    <div id="progressBar"><div id="progress"></div></div>
-   </div>
+  <div>
+   <input type="text" size="30" id="fileName"><button type="button" id="viewButton">表示</button><br>
+   <img id="image">
   </div>
   <script src="/__/firebase/5.4.2/firebase-app.js"></script>
   <script src="/__/firebase/5.4.2/firebase-auth.js"></script>
   <script src="/__/firebase/5.4.2/firebase-storage.js"></script>
   <script src="/__/firebase/init.js"></script>
-  <script src="/storage/storage.js"></script>
+  <script src="/storage/view.js"></script>
  </body>
 </html>

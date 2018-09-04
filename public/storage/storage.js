@@ -39,6 +39,9 @@ firebase.auth().onAuthStateChanged((user) => {
 });
 
 const fileButton = document.getElementById('file');
+const uploadStatusEl = document.getElementById('uploadStatus');
+const fileNameEl = document.getElementById('fileName');
+const fileSizeEl = document.getElementById('fileSize');
 const progressEl = document.getElementById('progress');
 
 document.getElementById('selectFile').addEventListener('click', (event) => {
@@ -48,12 +51,16 @@ document.getElementById('selectFile').addEventListener('click', (event) => {
 
 fileButton.addEventListener('change', (event) => {
   const file = event.currentTarget.files[0];
-  console.log(file);
   const uploadTask = firebase.storage().ref(`files/${file.name}`).put(file);
+
+  uploadStatusEl.classList.remove('hidden');
+  fileNameEl.textContent = file.name;
+  fileSizeEl.textContent = `(${getDisplayFileSize(file.size)})`;
 
   uploadTask.on('state_changed', function(snapshot) {
     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-    progressEl.style.borderLeft = `solid ${progress}px #000`;
+    progressEl.style.width = `${progress}%`;
+    progressEl.textContent = `${parseInt(progress, 10)}%`;
     switch (snapshot.state) {
       case firebase.storage.TaskState.PAUSED: // or 'paused'
         console.log('Upload is paused');
@@ -68,14 +75,9 @@ fileButton.addEventListener('change', (event) => {
     // https://firebase.google.com/docs/storage/web/handle-errors
     switch (error.code) {
       case 'storage/unauthorized':
-        // User doesn't have permission to access the object
         console.log('storage/unauthorized');
         break;
-        case 'storage/canceled':
-        // User canceled the upload
-        break;
       case 'storage/unknown':
-        // Unknown error occurred, inspect error.serverResponse
         break;
     }
   }, function() {
@@ -84,3 +86,22 @@ fileButton.addEventListener('change', (event) => {
     });
   });
 });
+
+function getDisplayFileSize(plainSize) {
+  var SIZE_UNIT = ['B', 'KB', 'MB', 'GB', 'TB'];
+
+  var size = parseInt(plainSize, 10);
+
+  for (var i = 0; i < SIZE_UNIT.length; i++) {
+    if (size < 1000) break;
+    size = size / 1024;
+  }
+
+  if (size === Math.floor(size)) {
+    size = Math.floor(size);
+  } else {
+    size = size.toPrecision(3);
+  }
+
+  return size + SIZE_UNIT[i];
+}

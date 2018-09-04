@@ -114,47 +114,6 @@ body {
   margin-right: 10px;
 }
 
-#storageArea {
-  display: flex;
-  align-items: center;
-}
-
-#selectFile {
-  margin-right: 5px;
-}
-
-#uploadStatus {
-  display: flex;
-  align-items: center;
-}
-
-#uploadStatus.hidden {
-  display: none;
-}
-
-#uploadStatus > div:not(:last-child) {
-  margin-right: 5px;
-}
-
-#fileName, #fileSize {
-  font-size: 14px;
-}
-
-#progressBar {
-  background-color: #eee;
-  width: 200px;
-  height: 20px;
-  overflow: hidden;
-}
-
-#progress {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #007bff;
-  font-size: 12px;
-  color: #fff;
-  text-align: center;
-  width: 0;
-  height: 100%;
+#image {
+  width: 300px;
 }
