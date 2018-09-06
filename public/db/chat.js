@@ -2,7 +2,7 @@
 
 const messageEl = document.getElementById('message');
 const nameEl = document.getElementById('name');
-const messageList = document.getElementById('messageList');
+const chatList = document.getElementById('chatList');
 
 const messagesRef = firebase.database().ref('chat');
 
@@ -23,28 +23,18 @@ messageEl.addEventListener('keypress', registerMessage);
 messagesRef.on('child_added', (data) => {
   const message = data.val();
 
-  const messageArea = document.createElement('div');
-  messageList.insertBefore(messageArea, messageList.firstChild);
+  const template = document.getElementById('messageTemplate');
+  template.content.querySelector('.name').textContent = message.name;
+  template.content.querySelector('.message').textContent = message.message;
 
-  const deleteButton = document.createElement('button');
-  deleteButton.classList.add('deleteButton');
-  deleteButton.textContent = '☓';
-  deleteButton.addEventListener('click', (event) => {
+  const clone = document.importNode(template.content, true);
+  clone.querySelector('.deleteButton').addEventListener('click', (event) => {
     event.preventDefault();
-    const deleteEl = deleteButton.parentNode;
+    const deleteEl = event.currentTarget.parentNode;
     deleteEl.parentNode.removeChild(deleteEl);
 
     messagesRef.child(data.key).remove();
   });
-  messageArea.appendChild(deleteButton);
 
-  const nameDiv = document.createElement('div');
-  nameDiv.classList.add('name');
-  nameDiv.textContent = message.name;
-  messageArea.appendChild(nameDiv);
-
-  const messageDiv = document.createElement('div');
-  messageDiv.classList.add('message');
-  messageDiv.textContent = message.message;
-  messageArea.appendChild(messageDiv);
+  chatList.insertBefore(clone, chatList.firstChild);
 });

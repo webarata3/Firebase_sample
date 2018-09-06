@@ -14,13 +14,21 @@ body {
   padding: 0;
 }
 
-.messageArea {
+main {
   margin: 5px;
 }
 
 .name {
   color: #999;
   font-size: 7px;
+}
+
+.chat {
+  position: relative;
+}
+
+.chat:hover {
+  background-color: #eee;
 }
 
 .message {
@@ -32,6 +40,9 @@ body {
   border: none;
   border-radius: 5px;
   outline: none;
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }
 
 .deleteButton:hover {
@@ -44,20 +55,16 @@ body {
   color: #fff;
 }
 
-#messageList {
+#chatList {
   margin-top: 10px;
 }
 
-#messageList > div {
+#chatList > div {
   padding: 5px;
 }
 
-#messageList > div:not(:last-child) {
+#chatList > div:not(:last-child) {
   border-bottom: 1px solid #999;
-}
-
-.inputArea {
-  margin: 10px 0;
 }
 
 /* https://www.pc-weblog.com/floating-label/ */
