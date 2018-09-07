@@ -26,8 +26,11 @@
    </div>
   </div>
   <div>
-   <input type="text" size="30" id="fileName"><button type="button" id="viewButton">表示</button><br>
+   <input type="text" size="30" id="fileName">
+   <button type="button" id="viewButton">画像として表示</button>
+   <button type="button" id="downloadButton">ファイルとしてダウンロード</button><br>
    <img id="image">
+   <a href="#" id="downloadLink" download hidden></a>
   </div>
   <script src="/__/firebase/5.4.2/firebase-app.js"></script>
   <script src="/__/firebase/5.4.2/firebase-auth.js"></script>

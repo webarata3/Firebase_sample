@@ -51,17 +51,34 @@ viewButton.addEventListener('click', (evnet) => {
   const storageRef = storage.ref(fileName);
 
   storageRef.getDownloadURL().then(function(url) {
-    var xhr = new XMLHttpRequest();
-    xhr.responseType = 'blob';
-    xhr.onload = function(event) {
-      var blob = xhr.response;
-    };
-    xhr.open('GET', url);
-    xhr.send();
-
     imageEl.src = url;
   }).catch(function(error) {
-    // Handle any errors
+    console.log(error);
   });
+});
 
+const downloadButton = document.getElementById('downloadButton');
+
+downloadButton.addEventListener('click', (event) => {
+  const fileName = fileNameEl.value;
+  if (!fileName) return;
+
+  const storageRef = storage.ref(fileName);
+
+  storageRef.getDownloadURL().then(function(url) {
+    const xhr = new XMLHttpRequest();
+
+    xhr.responseType = 'blob';
+    xhr.addEventListener('load', (event) => {
+      const blob = xhr.response;
+      const link = document.getElementById("downloadLink");
+      link.href = URL.createObjectURL(blob);
+      link.download = 'ダウンロードテストファイル';
+      link.click();
+    });
+    xhr.open('GET', url);
+    xhr.send();
+  }).catch(function(error) {
+    console.log(error);
+  });
 });
