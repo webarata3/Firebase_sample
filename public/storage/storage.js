@@ -147,20 +147,3 @@ deleteButton.addEventListener('click', (event) => {
     snackbar('ファイルの削除エラーです。' + error.code);
   });
 });
-
-let timer;
-const snackbarEl = document.getElementById('snackbar');
-
-function snackbar(message) {
-  snackbarEl.textContent = message;
-  snackbarEl.classList.add('show');
-
-  // timeoutが設定されてたら、消して設定し直す
-  if (timer) {
-    clearTimeout(timer);
-  }
-
-  timer = setTimeout(() => {
-    snackbarEl.classList.remove('show');
-  }, 3000);
-}
