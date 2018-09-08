@@ -149,9 +149,6 @@ class AuthGoogle extends HTMLElement {
 
     const PROFILE_PLACEHOLDER_IMAGE = '/image/profile_placeholder.png';
 
-    const loginEvent = new Event('login');
-    const logoutEvent = new Event('logout');
-
     firebase.auth().onAuthStateChanged((user) => {
       loaderArea.classList.add('hidden');
       if (user) {
@@ -160,13 +157,15 @@ class AuthGoogle extends HTMLElement {
         displayName.textContent = user.displayName;
         const profileImageUrl = user.photoURL || PROFILE_PLACEHOLDER_IMAGE;
         profileImage.style.backgroundImage = `url(${profileImageUrl})`;
-        this.dispatchEvent(loginEvent);
+        this.dispatchEvent(new CustomEvent('login', {
+          detail: user
+        }));
       } else {
         loginButton.removeAttribute('hidden');
         logoutButton.setAttribute('hidden', 'true');
         displayName.textContent = '';
         profileImage.style.backgroundImage = 'none';
-        this.dispatchEvent(logoutEvent);
+        this.dispatchEvent(new Event('logout'));
       }
     });
   }
