@@ -165,14 +165,6 @@ class AuthGoogle extends HTMLElement {
       }
     });
   }
-
-  static get observedAttributes() {
-    return ['message'];
-  }
-
-  attributeChangedCallback(attrName, oldVal, newVal) {
-    this.shadowRoot.getElementById('message').textContent = this.getAttribute('message');
-  }
 }
 
 customElements.define('auth-google', AuthGoogle);
