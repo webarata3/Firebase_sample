@@ -2,6 +2,7 @@
 
 :root {
   --blue: #007bff;
+  --snackbar-height: 60px;
 }
 
 * {
@@ -114,9 +115,10 @@ body {
   margin-right: 10px;
 }
 
-#storageArea {
+#uploadForm {
   display: flex;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 #selectFile {
@@ -136,7 +138,7 @@ body {
   margin-right: 5px;
 }
 
-#fileName, #fileSize {
+#uploadFileName, #fileSize {
   font-size: 14px;
 }
 
@@ -157,4 +159,50 @@ body {
   text-align: center;
   width: 0;
   height: 100%;
+}
+
+#image {
+  width: 300px;
+}
+
+#snackbar {
+  display: flex;
+  align-items: center;
+  visibility: hidden;
+  background-color: #333;
+  color: #fff;
+  position: fixed;
+  padding: 10px;
+  z-index: 1;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  height: var(--snackbar-height);
+}
+
+#snackbar > div {
+  align-content: center;
+}
+
+#snackbar.show {
+  visibility: visible;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@keyframes fadein {
+  from {
+    bottom: calc(-1 * var(--snackbar-height));
+  }
+  to {
+    bottom: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    bottom: 0;
+  }
+  to {
+    bottom: calc(-1 * var(--snackbar-height));
+  }
 }

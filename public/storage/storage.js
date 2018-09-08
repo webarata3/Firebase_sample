@@ -40,7 +40,7 @@ firebase.auth().onAuthStateChanged((user) => {
 
 const fileButton = document.getElementById('file');
 const uploadStatusEl = document.getElementById('uploadStatus');
-const fileNameEl = document.getElementById('fileName');
+const uploadFileNameEl = document.getElementById('uploadFileName');
 const fileSizeEl = document.getElementById('fileSize');
 const progressEl = document.getElementById('progress');
 
@@ -54,36 +54,17 @@ fileButton.addEventListener('change', (event) => {
   const uploadTask = firebase.storage().ref(`files/${file.name}`).put(file);
 
   uploadStatusEl.classList.remove('hidden');
-  fileNameEl.textContent = file.name;
+  uploadFileNameEl.textContent = file.name;
   fileSizeEl.textContent = `(${getDisplayFileSize(file.size)})`;
 
-  uploadTask.on('state_changed', function(snapshot) {
+  uploadTask.on('state_changed', (snapshot) => {
     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
     progressEl.style.width = `${progress}%`;
     progressEl.textContent = `${parseInt(progress, 10)}%`;
-    switch (snapshot.state) {
-      case firebase.storage.TaskState.PAUSED: // or 'paused'
-        console.log('Upload is paused');
-        break;
-      case firebase.storage.TaskState.RUNNING: // or 'running'
-        console.log('Upload is running');
-        break;
-    }
-  }, function(error) {
-    console.log(error);
-    // A full list of error codes is available at
-    // https://firebase.google.com/docs/storage/web/handle-errors
-    switch (error.code) {
-      case 'storage/unauthorized':
-        console.log('storage/unauthorized');
-        break;
-      case 'storage/unknown':
-        break;
-    }
-  }, function() {
-    uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-      console.log('File available at', downloadURL);
-    });
+  }, (error) => {
+    snackbar('ファイルのアップロードエラーです。' + error.code);
+  }, () => {
+    snackbar('ファイルのアップロードが完了しました');
   });
 });
 
@@ -104,4 +85,82 @@ function getDisplayFileSize(plainSize) {
   }
 
   return size + SIZE_UNIT[i];
+}
+
+const fileNameEl = document.getElementById('fileName');
+const viewButton = document.getElementById('viewButton');
+const imageEl = document.getElementById('image');
+
+var storage = firebase.storage();
+
+viewButton.addEventListener('click', (evnet) => {
+  const fileName = fileNameEl.value;
+  if (!fileName) return;
+
+  const storageRef = storage.ref(fileName);
+
+  storageRef.getDownloadURL().then(function(url) {
+    imageEl.src = url;
+  }).catch(function(error) {
+    snackbar('ファイルの表示エラーです。' + error.code);
+  });
+});
+
+const downloadButton = document.getElementById('downloadButton');
+
+downloadButton.addEventListener('click', (event) => {
+  const fileName = fileNameEl.value;
+  if (!fileName) return;
+
+  const storageRef = storage.ref(fileName);
+
+  storageRef.getDownloadURL().then(function(url) {
+    const xhr = new XMLHttpRequest();
+
+    xhr.responseType = 'blob';
+    xhr.addEventListener('load', (event) => {
+      const blob = xhr.response;
+      const link = document.getElementById("downloadLink");
+      link.href = URL.createObjectURL(blob);
+      const splitName = fileName.split('/');
+      link.download = splitName[splitName.length - 1];
+      link.click();
+    });
+    xhr.open('GET', url);
+    xhr.send();
+  }).catch(function(error) {
+    snackbar('ファイルのダウンロードエラーです。' + error.code);
+  });
+});
+
+const deleteButton = document.getElementById('deleteButton');
+
+deleteButton.addEventListener('click', (event) => {
+  const fileName = fileNameEl.value;
+  if (!fileName) return;
+
+  const storageRef = storage.ref(fileName);
+
+  storageRef.delete().then(() => {
+    snackbar(fileName + 'を削除しました。');
+  }).catch((error) => {
+    snackbar('ファイルの削除エラーです。' + error.code);
+  });
+});
+
+let timer;
+const snackbarEl = document.getElementById('snackbar');
+
+function snackbar(message) {
+  snackbarEl.textContent = message;
+  snackbarEl.classList.add('show');
+
+  // timeoutが設定されてたら、消して設定し直す
+  if (timer) {
+    clearTimeout(timer);
+  }
+
+  timer = setTimeout(() => {
+    snackbarEl.classList.remove('show');
+  }, 3000);
 }

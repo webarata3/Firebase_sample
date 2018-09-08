@@ -26,13 +26,27 @@
    </div>
   </div>
   <div id="storageArea">
-   <input type="file" id="file" hidden><button id="selectFile">ファイルを選択</button>
-   <div id="uploadStatus" class="hidden">
-    <div id="fileName"></div>
-    <div id="fileSize"></div>
-    <div id="progressBar"><div id="progress"></div></div>
+   <div id="uploadForm">
+    <input type="file" id="file" hidden>
+    <button id="selectFile">ファイルを選択</button>
+    <div id="uploadStatus" class="hidden">
+     <div id="uploadFileName"></div>
+     <div id="fileSize"></div>
+     <div id="progressBar">
+      <div id="progress"></div>
+     </div>
+    </div>
+   </div>
+   <div id="operationForm">
+    <input type="text" size="30" id="fileName">
+    <button type="button" id="viewButton">画像として表示</button>
+    <button type="button" id="downloadButton">ファイルとしてダウンロード</button>
+    <button type="button" id="deleteButton">ファイルの削除</button><br>
+    <img id="image">
+    <a href="#" id="downloadLink" download hidden></a>
    </div>
   </div>
+  <div id="snackbar"></div>
   <script src="/__/firebase/5.4.2/firebase-app.js"></script>
   <script src="/__/firebase/5.4.2/firebase-auth.js"></script>
   <script src="/__/firebase/5.4.2/firebase-storage.js"></script>
