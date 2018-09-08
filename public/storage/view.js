@@ -1,8 +1,8 @@
 'use strict';
 
 const loaderArea = document.getElementById('loaderArea');
-const loginButton = document.getElementById('login');
-const logoutButton = document.getElementById('logout');
+const loginButton = document.getElementById('loginButton');
+const logoutButton = document.getElementById('logoutButton');
 const displayName = document.getElementById('displayName');
 const profileImage = document.getElementById('profileImage');
 
