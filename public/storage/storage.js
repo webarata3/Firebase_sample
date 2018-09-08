@@ -62,9 +62,9 @@ fileButton.addEventListener('change', (event) => {
     progressEl.style.width = `${progress}%`;
     progressEl.textContent = `${parseInt(progress, 10)}%`;
   }, (error) => {
-    snackbar('ファイルのアップロードエラーです。' + error.code);
+    snackBar('ファイルのアップロードエラーです。' + error.code);
   }, () => {
-    snackbar('ファイルのアップロードが完了しました');
+    snackBar('ファイルのアップロードが完了しました');
   });
 });
 
@@ -102,7 +102,7 @@ viewButton.addEventListener('click', (evnet) => {
   storageRef.getDownloadURL().then(function(url) {
     imageEl.src = url;
   }).catch(function(error) {
-    snackbar('ファイルの表示エラーです。' + error.code);
+    snackBar('ファイルの表示エラーです。' + error.code);
   });
 });
 
@@ -129,7 +129,7 @@ downloadButton.addEventListener('click', (event) => {
     xhr.open('GET', url);
     xhr.send();
   }).catch(function(error) {
-    snackbar('ファイルのダウンロードエラーです。' + error.code);
+    snackBar('ファイルのダウンロードエラーです。' + error.code);
   });
 });
 
@@ -142,8 +142,8 @@ deleteButton.addEventListener('click', (event) => {
   const storageRef = storage.ref(fileName);
 
   storageRef.delete().then(() => {
-    snackbar(fileName + 'を削除しました。');
+    snackBar(fileName + 'を削除しました。');
   }).catch((error) => {
-    snackbar('ファイルの削除エラーです。' + error.code);
+    snackBar('ファイルの削除エラーです。' + error.code);
   });
 });

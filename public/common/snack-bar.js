@@ -5,9 +5,7 @@ class SnackBar extends HTMLElement {
     shadowRoot.innerHTML = `
 <style>
 :host {
-  display: flex;
-  align-items: center;
-  visibility: hidden;
+  display: none;
   background-color: #333;
   color: #fff;
   position: fixed;
@@ -20,7 +18,8 @@ class SnackBar extends HTMLElement {
 }
 
 :host(.show) {
-  visibility: visible;
+  display: flex;
+  align-items: center;
   animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
 
@@ -52,18 +51,20 @@ class SnackBar extends HTMLElement {
 
   attributeChangedCallback(attrName, oldVal, newVal) {
     this.shadowRoot.getElementById('message').textContent = this.getAttribute('message');
-    this.textContent = this.getAttribute('message');
   }
 }
 
 customElements.define('snack-bar', SnackBar);
 
 let timer;
-const snackbarEl = document.getElementById('snackbar');
+const snackBarEls = document.getElementsByTagName('snack-bar');
+const snackBarEl = snackBarEls.length > 0 ? snackBarEls[0] : null;
 
-function snackbar(message) {
-  snackbarEl.setAttribute('message', message);
-  snackbarEl.classList.add('show');
+function snackBar(message) {
+  if (!snackBarEl) return;
+
+  snackBarEl.setAttribute('message', message);
+  snackBarEl.classList.add('show');
 
   // timeoutが設定されてたら、消して設定し直す
   if (timer) {
@@ -71,6 +72,6 @@ function snackbar(message) {
   }
 
   timer = setTimeout(() => {
-    snackbarEl.classList.remove('show');
+    snackBarEl.classList.remove('show');
   }, 3000);
 }
