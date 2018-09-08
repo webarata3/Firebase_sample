@@ -8,7 +8,7 @@ class AuthGoogle extends HTMLElement {
 <style>
 .auth_button {
   background-color: #fff;
-  border: 1px solid var(--blue);
+  border: 1px solid #007bff;
   border-radius: 5px;
   color: var(--blue);
   padding: 4px 8px;
@@ -17,7 +17,7 @@ class AuthGoogle extends HTMLElement {
 }
 
 .auth_button:hover {
-  background-color: var(--blue);
+  background-color: #007bff;
   color: #fff;
 }
 
@@ -149,6 +149,9 @@ class AuthGoogle extends HTMLElement {
 
     const PROFILE_PLACEHOLDER_IMAGE = '/image/profile_placeholder.png';
 
+    const loginEvent = new Event('login');
+    const logoutEvent = new Event('logout');
+
     firebase.auth().onAuthStateChanged((user) => {
       loaderArea.classList.add('hidden');
       if (user) {
@@ -157,11 +160,13 @@ class AuthGoogle extends HTMLElement {
         displayName.textContent = user.displayName;
         const profileImageUrl = user.photoURL || PROFILE_PLACEHOLDER_IMAGE;
         profileImage.style.backgroundImage = `url(${profileImageUrl})`;
+        this.dispatchEvent(loginEvent);
       } else {
         loginButton.removeAttribute('hidden');
         logoutButton.setAttribute('hidden', 'true');
         displayName.textContent = '';
         profileImage.style.backgroundImage = 'none';
+        this.dispatchEvent(logoutEvent);
       }
     });
   }
