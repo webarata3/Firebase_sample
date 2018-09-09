@@ -66,19 +66,27 @@ input:focus + label {
 <input type="text" placeholder="&nbsp;">
 <label></label>
 `;
+
+    this.style.setProperty('--font-size', '14px');
   }
 
   static get observedAttributes() {
-    return ['label', 'size', 'font-zie'];
+    return ['label', 'size', 'font-size'];
   }
 
   attributeChangedCallback(attrName, oldVal, newVal) {
-    this.shadowRoot.querySelector('label').textContent = this.getAttribute('label');
-
-    const fontSize = this.getAttribute('font-size') || '14';
-    this.style.setProperty('--font-size', fontSize + 'px');
-
-    this.shadowRoot.querySelector('input').setAttribute('size', this.getAttribute('size'));
+    switch (attrName) {
+      case 'label':
+        this.shadowRoot.querySelector('label').textContent = newVal;
+        break;
+      case 'font-size':
+        const fontSize = newVal || '14';
+        this.style.setProperty('--font-size', fontSize + 'px');
+        break;
+      case 'size':
+        this.shadowRoot.querySelector('input').setAttribute('size', newVal);
+        break;
+    }
   }
 }
 
