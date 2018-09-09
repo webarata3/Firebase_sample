@@ -9,14 +9,8 @@
  <body>
   <main>
    <div>
-    <div class="floating-box">
-     <input type="text" id="name" size="10" placeholder="&nbsp;">
-     <label for="name">名前</label>
-    </div>
-    <div class="floating-box">
-     <input type="text" id="message" size="50" placeholder="&nbsp;">
-     <label for="message">メッセージ</label>
-    </div>
+    <floating-box id="name" size="10" font-size="14" label="名前"></floating-box>
+    <floating-box id="message" size="50" font-size="14" label="メッセージ"></floating-box>
    </div>
    <div id="chatList"></div>
   </main>
@@ -30,6 +24,7 @@
   <script src="/__/firebase/5.4.2/firebase-app.js"></script>
   <script src="/__/firebase/5.4.2/firebase-database.js"></script>
   <script src="/__/firebase/init.js"></script>
+  <script src="/common/floating-box.js"></script>
   <script src="/db/chat.js"></script>
  </body>
 </html>

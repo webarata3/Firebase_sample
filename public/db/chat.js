@@ -1,7 +1,7 @@
 'use strict';
 
-const messageEl = document.getElementById('message');
-const nameEl = document.getElementById('name');
+const nameEl = document.getElementById('name').shadowRoot.querySelector('input');
+const messageEl = document.getElementById('message').shadowRoot.querySelector('input');
 const chatList = document.getElementById('chatList');
 
 const messagesRef = firebase.database().ref('chat');
