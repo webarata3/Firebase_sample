@@ -7,6 +7,8 @@ class SnackBar extends HTMLElement {
     shadowRoot.innerHTML = `
 <style>
 :host {
+  --snack-bar-height: 60px;
+
   display: none;
   background-color: #333;
   color: #fff;
@@ -16,7 +18,7 @@ class SnackBar extends HTMLElement {
   left: 0;
   bottom: 0;
   width: 100vw;
-  height: 60px;
+  height: var(--snack-bar-height);
 }
 
 :host(.show) {
@@ -27,7 +29,7 @@ class SnackBar extends HTMLElement {
 
 @keyframes fadein {
   from {
-    bottom: -60px;
+    bottom: calc(-1 * var(--snack-bar-height));
   }
   to {
     bottom: 0;
@@ -39,7 +41,7 @@ class SnackBar extends HTMLElement {
     bottom: 0;
   }
   to {
-    bottom: -60px;
+    bottom: calc(-1 * var(--snack-bar-height));
   }
 }
 </style>
@@ -48,11 +50,18 @@ class SnackBar extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['message'];
+    return ['message', 'snack-bar-height'];
   }
 
   attributeChangedCallback(attrName, oldVal, newVal) {
-    this.shadowRoot.getElementById('message').textContent = this.getAttribute('message');
+    switch (attrName) {
+      case 'message':
+        this.shadowRoot.getElementById('message').textContent = newVal;
+        break;
+      case 'snack-bar-height':
+        this.style.setProperty('--snack-bar-height', newVal + 'px');
+        break;
+    }
   }
 }
 

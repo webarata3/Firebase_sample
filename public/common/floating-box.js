@@ -6,11 +6,6 @@ class FloatingBox extends HTMLElement {
     const shadowRoot = this.attachShadow({mode: 'open'});
     shadowRoot.innerHTML = `
 <style>
-:root {
-  /* 最小14px */
-  --input-font-size: 14px;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -18,6 +13,8 @@ class FloatingBox extends HTMLElement {
 /* https://www.pc-weblog.com/floating-label/ */
 
 :host {
+  --font-size: 14px;
+
   position: relative;
   margin-top: calc(var(--font-size) - 9px);
   margin-bottom: 20px;
@@ -53,11 +50,11 @@ input:focus + label, input:not(:placeholder-shown) + label {
   padding: 0 0.2rem;
 }
 
-/* 入力中のみ青色 */
 input:not(:placeholder-shown) + label {
   color: #666;
 }
 
+/* 入力中のみ青色 */
 input:focus + label {
   color: #1869fe;
   font-weight: bold;
