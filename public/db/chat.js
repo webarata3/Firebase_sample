@@ -1,6 +1,6 @@
 'use strict';
 
-const nameEl = document.getElementById('name').shadowRoot.querySelector('inputa');
+const nameEl = document.getElementById('name').shadowRoot.querySelector('input');
 const messageEl = document.getElementById('message').shadowRoot.querySelector('input');
 const chatList = document.getElementById('chatList');
 
