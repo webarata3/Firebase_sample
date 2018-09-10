@@ -65,6 +65,13 @@ input:focus + label {
 `;
 
     this.style.setProperty('--font-size', '14px');
+
+    // ラベルをクリックしたときにフォーカスが当たるようにする。
+    const input = this.shadowRoot.querySelector('input');
+
+    this.addEventListener('click', (event) => {
+      input.focus();
+    });
   }
 
   static get observedAttributes() {
