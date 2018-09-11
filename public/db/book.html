@@ -7,15 +7,27 @@
   <link href="/db/book.css" rel="stylesheet">
  </head>
  <body>
+  <auth-google></auth-google>
   <div class="inputArea">
-   <input type="text" size="20" id="isbn" placeholder="ISBN">
-   <input type="text" size="40" id="name" placeholder="書名">
+   <floating-box id="isbn" size="20" font-size="14" label="ISBN"></floating-box>
+   <floating-box id="name" size="40" font-size="14" label="書名"></floating-box>
    <button id="insertButton">登録</button>
   </div>
   <div id="bookList"></div>
+  <template id="bookTemplate">
+   <div class="book">
+    <button class="editButton">✎</button>
+    <button class="deleteButton">☓</button>
+    <div class="isbn"></div>
+    <div class="bookName"></div>
+   </div>
+  </template>
   <script src="/__/firebase/5.4.2/firebase-app.js"></script>
+  <script src="/__/firebase/5.4.2/firebase-auth.js"></script>
   <script src="/__/firebase/5.4.2/firebase-database.js"></script>
   <script src="/__/firebase/init.js"></script>
+  <script src="/common/auth-google.js"></script>
+  <script src="/common/floating-box.js"></script>
   <script src="/db/book.js"></script>
  </body>
 </html>

@@ -1,46 +1,41 @@
 'use strict';
 
-const isbnField = document.getElementById('isbn');
-const nameField = document.getElementById('name');
+const isbnEl = document.getElementById('isbn').shadowRoot.querySelector('input');
+const nameEl = document.getElementById('name').shadowRoot.querySelector('input');
 
 const booksRef = firebase.database().ref('book');
 
 document.getElementById('insertButton').addEventListener('click', (event) => {
-  const isbn = isbnField.value;
-  const name = nameField.value;
+  const isbn = isbnEl.value;
+  const name = nameEl.value;
 
   if (isbn && name) {
     booksRef.push({isbn: isbn, name: name}).then(() => {
-      isbnField.value = '';
-      nameField.value = '';
-      console.log('OK!!');
+      isbnEl.value = '';
+      nameEl.value = '';
     }).catch((error) => {
-      console.log('error: ', error);
     });
   }
 });
 
 const bookList = document.getElementById('bookList');
 
+const template = document.getElementById('bookTemplate');
+
 booksRef.on('child_added', (data) => {
   const book = data.val();
 
-  const bookEl = document.createElement('div');
-  bookList.insertBefore(bookEl, bookList.firstChild);
+  template.content.querySelector('.isbn').textContent = book.isbn;
+  template.content.querySelector('.bookName').textContent = book.name;
 
-  // !!危険!! 本番はエスケープしましょう
-  bookEl.innerHTML =
-    `<div class="isbn">${book.isbn}</div>` +
-    `<div class="name">${book.name}</div>`;
-
-  const deleteButton = document.createElement('button');
-  deleteButton.textContent = '削除';
-  deleteButton.addEventListener('click', (event) => {
+  const clone = document.importNode(template.content, true);
+  clone.querySelector('.deleteButton').addEventListener('click', (event) => {
     event.preventDefault();
-    const deleteEl = deleteButton.parentNode;
+    const deleteEl = event.currentTarget.parentNode;
     deleteEl.parentNode.removeChild(deleteEl);
 
     booksRef.child(data.key).remove();
   });
-  bookEl.appendChild(deleteButton);
+
+  bookList.insertBefore(clone, bookList.firstChild);
 });
