@@ -38,6 +38,7 @@ label {
   font-size: calc(var(--font-size) - 2px);
   color: #666;
   transform: translate(0, -50%);
+  cursor: text;
 }
 
 input:focus + label, input:not(:placeholder-shown) + label {
@@ -67,7 +68,7 @@ input:focus + label {
     this.style.setProperty('--font-size', '14px');
 
     // ラベルをクリックしたときにフォーカスが当たるようにする。
-    const input = this.shadowRoot.querySelector('input');
+    const input = shadowRoot.querySelector('input');
 
     this.addEventListener('click', (event) => {
       input.focus();
