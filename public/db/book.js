@@ -26,6 +26,14 @@ const noBookEl = document.getElementById('noBook');
 let bookTableEl = null;
 let bookTbodyEl = null;
 
+booksRef.once('value').then((snapshot) => {
+  console.log(snapshot.val());
+  snapshot.forEach((val) => {
+
+    console.log(val.key,val.val().isbn, val.val().name);
+  });
+});
+
 booksRef.on('child_added', (data) => {
   const book = data.val();
 
