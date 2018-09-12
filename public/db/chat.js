@@ -21,6 +21,7 @@ nameEl.addEventListener('keypress', registerMessage);
 messageEl.addEventListener('keypress', registerMessage);
 
 messagesRef.on('child_added', (data) => {
+  console.log(data);
   const message = data.val();
 
   const template = document.getElementById('messageTemplate');
@@ -28,13 +29,6 @@ messagesRef.on('child_added', (data) => {
   template.content.querySelector('.message').textContent = message.message;
 
   const clone = document.importNode(template.content, true);
-  clone.querySelector('.deleteButton').addEventListener('click', (event) => {
-    event.preventDefault();
-    const deleteEl = event.currentTarget.parentNode;
-    deleteEl.parentNode.removeChild(deleteEl);
-
-    messagesRef.child(data.key).remove();
-  });
 
   chatList.insertBefore(clone, chatList.firstChild);
 });

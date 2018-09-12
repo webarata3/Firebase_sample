@@ -20,22 +20,33 @@ document.getElementById('insertButton').addEventListener('click', (event) => {
 
 const bookList = document.getElementById('bookList');
 
-const template = document.getElementById('bookTemplate');
+const tableTemplate = document.getElementById('tableTemplate');
+const bookTemplate = document.getElementById('bookTemplate');
+const noBookEl = document.getElementById('noBook');
+let bookTableEl = null;
+let bookTbodyEl = null;
 
 booksRef.on('child_added', (data) => {
   const book = data.val();
 
-  template.content.querySelector('.isbn').textContent = book.isbn;
-  template.content.querySelector('.bookName').textContent = book.name;
+  bookTemplate.content.querySelector('.isbn').textContent = book.isbn;
+  bookTemplate.content.querySelector('.name').textContent = book.name;
 
-  const clone = document.importNode(template.content, true);
+  const clone = document.importNode(bookTemplate.content, true);
   clone.querySelector('.deleteButton').addEventListener('click', (event) => {
     event.preventDefault();
-    const deleteEl = event.currentTarget.parentNode;
+    const deleteEl = event.currentTarget.parentNode.parentNode;
+
     deleteEl.parentNode.removeChild(deleteEl);
 
     booksRef.child(data.key).remove();
   });
 
-  bookList.insertBefore(clone, bookList.firstChild);
+  if (bookTableEl === null) {
+    bookTableEl = document.importNode(tableTemplate.content, true);
+    bookList.insertBefore(bookTableEl, noBookEl);
+    bookTbodyEl = document.querySelector('tbody');
+  }
+
+  bookTbodyEl.appendChild(clone);
 });

@@ -30,26 +30,6 @@ main {
   text-indent: 3em;
 }
 
-.deleteButton {
-  background-color: transparent;
-  border: none;
-  border-radius: 5px;
-  outline: none;
-  position: absolute;
-  top: 5px;
-  right: 5px;
-}
-
-.deleteButton:hover {
-  background-color: #f00;
-  color: #fff;
-}
-
-.deleteButton:active {
-  background-color: #f99;
-  color: #fff;
-}
-
 #chatList {
   margin-top: 10px;
 }

@@ -13,14 +13,28 @@
    <floating-box id="name" size="40" font-size="14" label="書名"></floating-box>
    <button id="insertButton">登録</button>
   </div>
-  <div id="bookList"></div>
+  <div id="bookList"><div id="noBook">本が登録されていません。</div></div>
+  <template id="tableTemplate">
+   <table>
+    <thead>
+     <tr>
+      <td>ISBN</td>
+      <td>書名</td>
+      <td></td>
+     </tr>
+    </thead>
+    <tbody></tbody>
+   </table>
+  </template>
   <template id="bookTemplate">
-   <div class="book">
-    <button class="editButton">✎</button>
-    <button class="deleteButton">☓</button>
-    <div class="isbn"></div>
-    <div class="bookName"></div>
-   </div>
+   <tr>
+    <td class="isbn"></td>
+    <td class="name"></td>
+    <td class="operation">
+     <button class="editButton">✎</button>
+     <button class="deleteButton">☓</button>
+    </td>
+   </tr>
   </template>
   <script src="/__/firebase/5.4.2/firebase-app.js"></script>
   <script src="/__/firebase/5.4.2/firebase-auth.js"></script>
