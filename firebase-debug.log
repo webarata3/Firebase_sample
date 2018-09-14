@@ -1,0 +1,28 @@
+[debug] [2018-09-14T09:36:07.441Z] ----------------------------------------------------------------------
+[debug] [2018-09-14T09:36:07.443Z] Command:       /usr/local/Cellar/node/10.10.0/bin/node /usr/local/bin/firebase serve
+[debug] [2018-09-14T09:36:07.443Z] CLI Version:   4.2.1
+[debug] [2018-09-14T09:36:07.443Z] Platform:      darwin
+[debug] [2018-09-14T09:36:07.443Z] Node Version:  v10.10.0
+[debug] [2018-09-14T09:36:07.444Z] Time:          Fri Sep 14 2018 18:36:07 GMT+0900 (Japan Standard Time)
+[debug] [2018-09-14T09:36:07.444Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-09-14T09:36:07.457Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-09-14T09:36:07.458Z] > authorizing via signed-in user
+[debug] [2018-09-14T09:36:07.460Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-09-14T09:36:07.460Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+
+[debug] [2018-09-14T09:36:07.721Z] <<< HTTP RESPONSE 200
+[debug] [2018-09-14T09:36:07.735Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/sandbox-2915c  
+ 
+[debug] [2018-09-14T09:36:08.402Z] <<< HTTP RESPONSE 200
+[debug] [2018-09-14T09:36:08.404Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/sandbox-2915c  
+ 
+[debug] [2018-09-14T09:36:09.203Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/arata/Dropbox/dev/ws/Firebase_sandbox'...
+[info] 
+[debug] [2018-09-14T09:36:09.205Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/558474568987/clients/_:getWebAppConfig  
+ 
+[debug] [2018-09-14T09:36:09.772Z] <<< HTTP RESPONSE 200
+[info] i  hosting[sandbox-2915c]: Serving hosting files from: public
+[info] ✔  hosting[sandbox-2915c]: Local server: http://localhost:5000

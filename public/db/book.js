@@ -9,11 +9,21 @@ document.getElementById('insertButton').addEventListener('click', (event) => {
   const isbn = isbnEl.value;
   const name = nameEl.value;
 
+  document.getElementById('isbn').setAttribute('error-message', 'すでに登録済みです');
+
+  // booksRef.orderByChild('name').startAt('t').endAt('t')
+  //   .once('value',function(snapshot) {console.log('s', snapshot.val())});
+
   if (isbn && name) {
-    booksRef.push({isbn: isbn, name: name}).then(() => {
-      isbnEl.value = '';
-      nameEl.value = '';
-    }).catch((error) => {
+    const newBookRef = booksRef.push();
+    newBookRef.set({isbn: isbn, name: name}, (error) => {
+      if (error) {
+
+      } else {
+        addBook(newBookRef.key, {isbn: isbn, name: name});
+        isbnEl.value = '';
+        nameEl.value = '';
+      }
     });
   }
 });
@@ -27,16 +37,12 @@ let bookTableEl = null;
 let bookTbodyEl = null;
 
 booksRef.once('value').then((snapshot) => {
-  console.log(snapshot.val());
   snapshot.forEach((val) => {
-
-    console.log(val.key,val.val().isbn, val.val().name);
+    addBook(val.key, val.val());
   });
 });
 
-booksRef.on('child_added', (data) => {
-  const book = data.val();
-
+function addBook(key, book) {
   bookTemplate.content.querySelector('.isbn').textContent = book.isbn;
   bookTemplate.content.querySelector('.name').textContent = book.name;
 
@@ -45,9 +51,12 @@ booksRef.on('child_added', (data) => {
     event.preventDefault();
     const deleteEl = event.currentTarget.parentNode.parentNode;
 
-    deleteEl.parentNode.removeChild(deleteEl);
-
-    booksRef.child(data.key).remove();
+    booksRef.child(key).remove((error) => {
+      if (error) {
+      } else {
+        deleteEl.parentNode.removeChild(deleteEl);
+      }
+    });
   });
 
   if (bookTableEl === null) {
@@ -57,4 +66,4 @@ booksRef.on('child_added', (data) => {
   }
 
   bookTbodyEl.appendChild(clone);
-});
+}

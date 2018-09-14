@@ -9,8 +9,8 @@
  <body>
   <auth-google></auth-google>
   <div class="inputArea">
-   <floating-box id="isbn" size="20" font-size="14" label="ISBN"></floating-box>
-   <floating-box id="name" size="40" font-size="14" label="書名"></floating-box>
+   <floating-box2 id="isbn" size="20" font-size="14" label="ISBN" error-message="あいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえお"></floating-box2>
+   <floating-box2 id="name" size="40" font-size="14" label="書名"></floating-box2>
    <button id="insertButton">登録</button>
   </div>
   <div id="bookList"><div id="noBook">本が登録されていません。</div></div>
@@ -18,9 +18,9 @@
    <table>
     <thead>
      <tr>
-      <td>ISBN</td>
-      <td>書名</td>
-      <td></td>
+      <th>ISBN</th>
+      <th>書名</th>
+      <th></th>
      </tr>
     </thead>
     <tbody></tbody>
@@ -41,7 +41,7 @@
   <script src="/__/firebase/5.4.2/firebase-database.js"></script>
   <script src="/__/firebase/init.js"></script>
   <script src="/common/auth-google.js"></script>
-  <script src="/common/floating-box.js"></script>
+  <script src="/common/floating-box2.js"></script>
   <script src="/db/book.js"></script>
  </body>
 </html>

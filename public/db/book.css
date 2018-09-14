@@ -1,8 +1,6 @@
 @charset "utf-8";
 
 :root {
-  /* 最小14px */
-  --floating-font-size: 14px;
   --blue: #007bff;
 }
 
@@ -42,16 +40,22 @@ button:hover {
   width: 40rem;
 }
 
-#bookList {
-  margin: 10px;
+table {
+  border-collapse: collapse;
 }
 
-#bookList > div {
+thead th {
+  border-bottom: 1px solid #999;
   padding: 5px;
 }
 
-#bookList > div:not(:last-child) {
-  border-bottom: 1px solid #999;
+tbody tr:hover {
+  background-color: #eee;
+  transition: background-color .15s ease-in-out;
+}
+
+tbody td {
+  padding: 5px;
 }
 
 table + #noBook {
