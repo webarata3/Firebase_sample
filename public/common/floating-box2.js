@@ -70,6 +70,7 @@ input:focus + label {
   padding: 0 5px;
   white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
 <div class="inputArea">
@@ -87,11 +88,6 @@ input:focus + label {
     this.addEventListener('click', (event) => {
       input.focus();
     });
-
-    // エラーメッセージのサイズを入力欄に合わせる
-    const inputArea = shadowRoot.querySelector('.inputArea');
-    const errorMessage = shadowRoot.querySelector('.errorMessage');
-    errorMessage.style.width = inputArea.clientWidth + 'px';
   }
 
   static get observedAttributes() {
@@ -109,9 +105,19 @@ input:focus + label {
         break;
       case 'size':
         this.shadowRoot.querySelector('input').setAttribute('size', newVal);
+
+        // エラーメッセージのサイズを入力欄に合わせる
+        // このタイミングでないと、横幅が決まらない
+        const inputArea = this.shadowRoot.querySelector('.inputArea');
+        const errorMessage = this.shadowRoot.querySelector('.errorMessage');
+        errorMessage.style.width = inputArea.clientWidth + 'px';
         break;
       case 'error-message':
-        this.shadowRoot.querySelector('.errorMessage').textContent = newVal;
+        if (newVal) {
+          this.shadowRoot.querySelector('.errorMessage').textContent = newVal;
+        } else {
+          this.shadowRoot.querySelector('.errorMessage').innerHTML = '&nbsp;';
+        }
         break;
     }
   }

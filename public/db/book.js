@@ -1,32 +1,89 @@
 'use strict';
 
-const isbnEl = document.getElementById('isbn').shadowRoot.querySelector('input');
-const nameEl = document.getElementById('name').shadowRoot.querySelector('input');
+const isbnEl = document.getElementById('isbn');
+const nameEl = document.getElementById('name');
+const isbnInputEl = isbnEl.shadowRoot.querySelector('input');
+const nameInputEl = nameEl.shadowRoot.querySelector('input');
 
 const booksRef = firebase.database().ref('book');
 
-document.getElementById('insertButton').addEventListener('click', (event) => {
-  const isbn = isbnEl.value;
-  const name = nameEl.value;
+document.getElementById('insertButton').addEventListener('click', async function (event) {
+  clearErrorMessage(isbnEl, nameEl);
 
-  document.getElementById('isbn').setAttribute('error-message', 'すでに登録済みです');
+  const isbn = isbnInputEl.value;
+  const name = nameInputEl.value;
 
-  // booksRef.orderByChild('name').startAt('t').endAt('t')
-  //   .once('value',function(snapshot) {console.log('s', snapshot.val())});
+  // 入力チェック
+  const [isbnError, nameError] = await Promise.all([
+    validateIsbn(isbn),
+    validateName(name)
+  ]);
 
-  if (isbn && name) {
+  setErrorMessage(
+    {el: isbnEl, message: isbnError},
+    {el: nameEl, message: nameError}
+  );
+
+  if (!isbnError && !nameError) {
     const newBookRef = booksRef.push();
     newBookRef.set({isbn: isbn, name: name}, (error) => {
       if (error) {
 
       } else {
         addBook(newBookRef.key, {isbn: isbn, name: name});
-        isbnEl.value = '';
-        nameEl.value = '';
+        isbnInputEl.value = '';
+        nameInputEl.value = '';
       }
     });
   }
 });
+
+function clearErrorMessage(...inputBoxes) {
+  inputBoxes.forEach((inputBox) => {
+    inputBox.setAttribute('error-message', '');
+  });
+}
+
+async function validateIsbn(value) {
+  return validateRequire(value)
+    || validateLength(value, 40)
+    || await validateExistsIsbn(value);
+}
+
+function validateName(value) {
+  return validateRequire(value)
+    || validateLength(value, 40);
+}
+
+function validateRequire(value) {
+  if (!value || value.length === 0) {
+    return '入力してください';
+  }
+  return null;
+}
+
+function validateLength(value, maxLength) {
+  if (value.length > maxLength) {
+    return `${maxLength}文字以内で入力してください`
+  }
+}
+
+async function validateExistsIsbn(value) {
+  const result = await booksRef.orderByChild('isbn').startAt(value).endAt(value).once('value');
+  if (result.val()) {
+    return '登録済みのISBNです';
+  }
+
+  return null;
+}
+
+function setErrorMessage(...messages) {
+  messages.forEach((message) => {
+    if (message.message) {
+      message.el.setAttribute('error-message', message.message);
+    }
+  });
+}
 
 const bookList = document.getElementById('bookList');
 
