@@ -1,17 +1,17 @@
 'use strict';
 
-const fileButton = document.getElementById('file');
+const fileButton = document.getElementById('fileButton');
 const uploadStatusEl = document.getElementById('uploadStatus');
 const uploadFileNameEl = document.getElementById('uploadFileName');
 const fileSizeEl = document.getElementById('fileSize');
 const progressEl = document.getElementById('progress');
 
-document.getElementById('selectFile').addEventListener('click', (event) => {
+document.getElementById('selectFileButton').addEventListener('click', event => {
   event.preventDefault();
   fileButton.click();
 });
 
-fileButton.addEventListener('change', (event) => {
+fileButton.addEventListener('change', event => {
   const file = event.currentTarget.files[0];
   const uploadTask = firebase.storage().ref(`files/${file.name}`).put(file);
 
@@ -19,23 +19,24 @@ fileButton.addEventListener('change', (event) => {
   uploadFileNameEl.textContent = file.name;
   fileSizeEl.textContent = `(${getDisplayFileSize(file.size)})`;
 
-  uploadTask.on('state_changed', (snapshot) => {
+  uploadTask.on('state_changed', snapshot => {
     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
     progressEl.style.width = `${progress}%`;
     progressEl.textContent = `${parseInt(progress, 10)}%`;
-  }, (error) => {
+  }, error => {
     snackBar('ファイルのアップロードエラーです。' + error.code);
   }, () => {
-    snackBar('ファイルのアップロードが完了しました');
+    snackBar('ファイルのアップロードが完了しました。');
   });
 });
 
 function getDisplayFileSize(plainSize) {
-  var SIZE_UNIT = ['B', 'KB', 'MB', 'GB', 'TB'];
+  const SIZE_UNIT = ['B', 'KB', 'MB', 'GB', 'TB'];
 
-  var size = parseInt(plainSize, 10);
+  let size = parseInt(plainSize, 10);
 
-  for (var i = 0; i < SIZE_UNIT.length; i++) {
+  let i;
+  for (i = 0; i < SIZE_UNIT.length; i++) {
     if (size < 1000) break;
     size = size / 1024;
   }
@@ -55,32 +56,30 @@ const imageEl = document.getElementById('image');
 
 var storage = firebase.storage();
 
-viewButton.addEventListener('click', (evnet) => {
+viewButton.addEventListener('click', evnet => {
   const fileName = fileNameEl.value;
   if (!fileName) return;
 
   const storageRef = storage.ref(fileName);
 
-  storageRef.getDownloadURL().then(function(url) {
+  storageRef.getDownloadURL().then(url => {
     imageEl.src = url;
-  }).catch(function(error) {
+  }).catch(error => {
     snackBar('ファイルの表示エラーです。' + error.code);
   });
 });
 
-const downloadButton = document.getElementById('downloadButton');
-
-downloadButton.addEventListener('click', (event) => {
+document.getElementById('downloadButton').addEventListener('click', event => {
   const fileName = fileNameEl.value;
   if (!fileName) return;
 
   const storageRef = storage.ref(fileName);
 
-  storageRef.getDownloadURL().then(function(url) {
+  storageRef.getDownloadURL().then(url => {
     const xhr = new XMLHttpRequest();
 
     xhr.responseType = 'blob';
-    xhr.addEventListener('load', (event) => {
+    xhr.addEventListener('load', event => {
       const blob = xhr.response;
       const link = document.getElementById("downloadLink");
       link.href = URL.createObjectURL(blob);
@@ -90,14 +89,12 @@ downloadButton.addEventListener('click', (event) => {
     });
     xhr.open('GET', url);
     xhr.send();
-  }).catch(function(error) {
+  }).catch(error => {
     snackBar('ファイルのダウンロードエラーです。' + error.code);
   });
 });
 
-const deleteButton = document.getElementById('deleteButton');
-
-deleteButton.addEventListener('click', (event) => {
+document.getElementById('deleteButton').addEventListener('click', event => {
   const fileName = fileNameEl.value;
   if (!fileName) return;
 
@@ -105,7 +102,7 @@ deleteButton.addEventListener('click', (event) => {
 
   storageRef.delete().then(() => {
     snackBar(fileName + 'を削除しました。');
-  }).catch((error) => {
+  }).catch(error => {
     snackBar('ファイルの削除エラーです。' + error.code);
   });
 });

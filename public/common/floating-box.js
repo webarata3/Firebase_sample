@@ -70,7 +70,7 @@ input:focus + label {
     // ラベルをクリックしたときにフォーカスが当たるようにする。
     const input = shadowRoot.querySelector('input');
 
-    this.addEventListener('click', (event) => {
+    this.addEventListener('click', event => {
       input.focus();
     });
   }

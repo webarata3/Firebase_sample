@@ -6,7 +6,7 @@ const chatList = document.getElementById('chatList');
 
 const messagesRef = firebase.database().ref('chat');
 
-const registerMessage = (event) => {
+const registerMessage = event => {
   if (event.key === 'Enter') {
     const name = nameEl.value;
     const message = messageEl.value;
@@ -20,8 +20,7 @@ const registerMessage = (event) => {
 nameEl.addEventListener('keypress', registerMessage);
 messageEl.addEventListener('keypress', registerMessage);
 
-messagesRef.on('child_added', (data) => {
-  console.log(data);
+messagesRef.on('child_added', data => {
   const message = data.val();
 
   const template = document.getElementById('messageTemplate');

@@ -68,8 +68,7 @@ class SnackBar extends HTMLElement {
 customElements.define('snack-bar', SnackBar);
 
 let timer;
-const snackBarEls = document.getElementsByTagName('snack-bar');
-const snackBarEl = snackBarEls.length > 0 ? snackBarEls[0] : null;
+const snackBarEl = document.querySelector('snack-bar');
 
 function snackBar(message) {
   if (!snackBarEl) return;

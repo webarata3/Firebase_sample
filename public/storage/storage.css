@@ -1,9 +1,5 @@
 @charset "utf-8";
 
-:root {
-  --blue: #007bff;
-}
-
 * {
   box-sizing: border-box;
 }

@@ -57,7 +57,6 @@ class AuthGoogle extends HTMLElement {
 }
 
 /* ぐるぐる https://codelabs.developers.google.com/codelabs/your-first-pwapp-ja/#0 */
-
 .loader #spinner {
   box-sizing: border-box;
   stroke: #fff;
@@ -135,13 +134,13 @@ class AuthGoogle extends HTMLElement {
 
     const provider = new firebase.auth.GoogleAuthProvider();
 
-    loginButton.addEventListener('click', (event) => {
+    loginButton.addEventListener('click', event => {
       event.preventDefault();
       loaderArea.classList.remove('hidden');
       firebase.auth().signInWithRedirect(provider);
     });
 
-    logoutButton.addEventListener('click', (event) => {
+    logoutButton.addEventListener('click', event => {
       event.preventDefault();
       loaderArea.classList.remove('hidden');
       firebase.auth().signOut();
@@ -149,7 +148,7 @@ class AuthGoogle extends HTMLElement {
 
     const PROFILE_PLACEHOLDER_IMAGE = '/image/profile_placeholder.png';
 
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(user => {
       loaderArea.classList.add('hidden');
       if (user) {
         loginButton.setAttribute('hidden', 'true');

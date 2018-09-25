@@ -7,10 +7,10 @@
       ".write": true,
       "$messageId": {
         "name": {
-          ".validate": "newData.val().length > 0"
+          ".validate": "newData.isString() && newData.val().length > 0"
         },
         "message": {
-         ".validate": "newData.val().length > 0 && newData.val().length <= 30"
+         ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 30"
         }
       }
     }
