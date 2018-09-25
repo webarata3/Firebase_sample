@@ -14,7 +14,6 @@ navigator.serviceWorker.register('/messaging/sw.js').then(() => {
       } else {
       }
     }).catch(error => {
-      console.log(error);
       snackBar('トークンが取得できない？' + error);
     });
   }).catch(error => {
