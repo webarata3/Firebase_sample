@@ -11,7 +11,7 @@ messaging.usePublicVapidKey('BNVfkVPxj_xhRsn2gJzYvjF0EDv6frofdmymHCQ1Chr7_6n5MqU
 // ブラウザ起動時はこちらに通知が来る
 messaging.onMessage(payload => {
   new Notification(payload.notification.title, {
-    body: 'ブラウザ' + payload.notification.body,
+    body: payload.notification.body,
     icon: '/messaging/icon.png'
   });
 });
