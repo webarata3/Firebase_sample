@@ -6,7 +6,7 @@ const messaging = firebase.messaging();
 
 const tokenEl = document.getElementById('token');
 
-messaging.usePublicVapidKey("BEBfhxkZQdvx1ModPfW_f3ga1sZANJ0vH8xLvPOUYwUsBaVhsVVR063T5wyILruVSFmpL4scVAXNhuVga6n6VVk");
+messaging.usePublicVapidKey('BNVfkVPxj_xhRsn2gJzYvjF0EDv6frofdmymHCQ1Chr7_6n5MqUwtRGg1R8lpQ0CZ-C61KPAgbP6TInPu-xj5oo');
 
 // ブラウザ起動時はこちらに通知が来る
 messaging.onMessage(payload => {

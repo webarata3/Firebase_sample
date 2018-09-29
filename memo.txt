@@ -1,3 +1,22 @@
-CORSの設定
+# CORSの設定
 
 gsutil cors set cors.json gs://sandbox-2915c.appspot.com
+
+
+# Pythonの実行
+
+pipenv install
+pipenv install oauth2client
+pipenv run python GetToken.py
+
+
+# 通知
+curl -X POST -H "Authorization: Bearer アクセストークン" -H "Content-Type: application/json" -d '{
+"message":{
+  "notification": {
+    "title": "FCM Message",
+    "body": "This is an FCM Message",
+  },
+  "token": "登録トークン"
+  }
+}' "https://fcm.googleapis.com/v1/projects/プロジェクトID/messages:send"
